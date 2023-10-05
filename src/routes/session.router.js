@@ -43,8 +43,18 @@ router.get('/logout', (req, res) => {
         if(err) {
             console.log(err);
             res.status(500).render('errors/base', {error: err})
-        } else res.redirect('/sessions/login')
+        } else res.redirect('/session/login')
     })
+})
+
+router.get('/github', passport.authenticate('github', { scope: ['user:email']}), (req, res) => {
+
+})
+
+router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async(req, res) => {
+    console.log('Callback: ', req.user)
+    req.session.user = req.user
+    res.redirect('/products')
 })
 
 
