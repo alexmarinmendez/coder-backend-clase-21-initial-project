@@ -58,5 +58,15 @@ router.get('/githubcallback', passport.authenticate('github', { failureRedirect:
 })
 
 
+router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}), (req, res) => {
+
+})
+
+router.get('/googlecallback', passport.authenticate('google', {failureRedirect: '/failure', successRedirect: '/'}), async(req, res) => {
+    console.log('Callback: ', req.user)
+    req.session.user = req.user
+    res.redirect('/products')
+})
+
 
 export default router
